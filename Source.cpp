@@ -16,7 +16,6 @@ struct Expense {
     double amount;
     set<string> excluded;
 };
-
 vector<string> split(const string& s, char delimiter) {
     vector<string> tokens;
     string token;
@@ -30,7 +29,6 @@ vector<string> split(const string& s, char delimiter) {
     }
     return tokens;
 }
-
 void solve() {
     ifstream input("input.txt");
     ofstream output("output.txt");
@@ -41,7 +39,6 @@ void solve() {
     string line;
     vector<string> participants;
     vector<Expense> expenses;
-
     getline(input, line);
     istringstream iss(line);
     int count;
@@ -54,9 +51,11 @@ void solve() {
         if (line.empty()) continue;
         Expense exp;
         size_t slash_pos = line.find('/');
+
         if (slash_pos != string::npos) {
             string before_slash = line.substr(0, slash_pos);
             string after_slash = line.substr(slash_pos + 1);
+
             size_t colon_pos = before_slash.find(':');
             if (colon_pos == string::npos) {
                 istringstream iss(before_slash);
@@ -91,7 +90,6 @@ void solve() {
         expenses.push_back(exp);
     }
     input.close();
-
     map<string, double> total_expenses;
     for (const string& name : participants) {
         total_expenses[name] = 0.0;
@@ -147,8 +145,10 @@ void solve() {
         if (amount > 1e-9) {
             output << debtors[i].first << " " << amount << " " << creditors[j].first << endl;
         }
+
         debtors[i].second -= amount;
         creditors[j].second -= amount;
+
         if (debtors[i].second < 1e-9) i++;
         if (creditors[j].second < 1e-9) j++;
     }
